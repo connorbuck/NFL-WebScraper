@@ -101,7 +101,26 @@ def DisplayAllGameResults():
             DisplayGameResult(result['Game %s' % counter])
             counter += 1
 
+
+# Display every game result for a given week in the 2020 season
+def DisplayGameResultsForWeek(week):
+    page = GetPage(week)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    result = GameResults(soup)
+    print('Week %s' % week)
+    counter = 1
+    # Not every week has same number of games played, this while loop takes care of this issue
+    while 'Game %s' % counter in result:
+        DisplayGameResult(result['Game %s' % counter])
+        counter += 1
+
+def GetGameResults(week):
+    page = GetPage(week)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    result = GameResults(soup)
+    return result
+
 # Main Method
 if __name__ == '__main__':
-    DisplayAllGameResults()
+    DisplayGameResultsForWeek(1)
    
