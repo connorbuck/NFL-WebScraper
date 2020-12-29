@@ -123,4 +123,3 @@ def GetGameResults(week):
 # Main Method
 if __name__ == '__main__':
     DisplayGameResultsForWeek(1)
-   
