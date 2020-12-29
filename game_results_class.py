@@ -31,6 +31,10 @@ class GameResult():
 	def get_losing_score(self):
 		return self.losing_score
 
+	# Display the game result
+	def display_game_result(self):
+		print(f'{self.get_date()}\n{self.get_winning_team()}  {self.get_winning_score()}\n{self.get_losing_team()}  {self.get_losing_score()}')
+
 # For games which end in a tie
 # Ability to show home and away team comes from structure of website HTML code
 # TODO: Can I use abstraction here to simplify this class?
@@ -57,3 +61,7 @@ class TieGameResult():
 	# Return the tie score of the game
 	def get_score(self):
 		return self.tie_score
+
+	# Display the tie game result
+	def display_game_result(self):
+		print(f'{self.get_date()}\n{self.get_away_team()}  {self.get_score()}\n{self.get_home_team()}  {self.get_score()}')
