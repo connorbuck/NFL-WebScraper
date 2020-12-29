@@ -65,3 +65,56 @@ class TieGameResult():
 	# Display the tie game result
 	def display_game_result(self):
 		print(f'{self.get_date()}\n{self.get_away_team()}  {self.get_score()}\n{self.get_home_team()}  {self.get_score()}')
+
+# Param: Int for week of season
+# Returns the page for the requested week of season
+def GetPage(weekNum):
+    return requests.get("https://www.pro-football-reference.com/years/2020/week_%s.htm" % weekNum)
+
+# Grabs and returns the result of each NFL game for a given week
+# Private method, meant to only be used inside of GameResultsForWeek() method below
+def __GrabGameResults(soup):
+	games_list = []
+
+	for game in soup.find_all('table', class_ = 'teams'):
+		game_date = game.find('tr', class_ = 'date').text # Grabs date
+
+		# Game did not end in a tie
+		if game.find('tr', class_ = 'loser') is not None:
+
+			game_loser = game.find('tr', class_ = 'loser') # Grabs unformatted losing team info
+			game_winner = game.find('tr', class_ = 'winner') # Grabs unformatted winning team info
+
+			# Use this to grab team info we want
+			game_loser_tname = game_loser.text.split('\n')[1]
+			game_loser_score = game_loser.text.split('\n')[2]
+
+			game_winner_tname = game_winner.text.split('\n')[1]
+			game_winner_score = game_winner.text.split('\n')[2]
+
+			# Add the specific game object to a list with all other games
+			games_list.append(GameResult(game_winner_tname, game_loser_tname, game_date, game_winner_score, game_loser_score))
+
+			# Game ended in a tie (no winner or loser)
+		else:
+			teams = game.find_all('tr', class_ = 'draw') # Grabs unformatted team info
+
+			# Use this to grab team info we want
+			away_tname = teams[0].text.split('\n')[1]
+			home_tname = teams[1].text.split('\n')[1]
+			tie_score = teams[0].text.split('\n')[2]
+
+			# Add the specific game object to a list with all other games
+			games_list.append(TieGameResult(away_tname, home_tname, game_date, tie_score))
+	return games_list
+
+# Return all game results for a given week
+def GameResultsForWeek(week):
+	page = GetPage(week) # Week 1 games
+	soup = BeautifulSoup(page.content, 'html.parser')
+	return __GrabGameResults(soup)
+
+# Main Method
+if __name__ == '__main__':
+	week_one_games = GameResultsForWeek(2)
+	week_one_games[0].display_game_result()
