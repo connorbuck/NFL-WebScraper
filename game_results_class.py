@@ -33,7 +33,7 @@ class GameResult():
 
 	# Display the game result
 	def display_game_result(self):
-		print(f'{self.get_date()}\n{self.get_winning_team()}  {self.get_winning_score()}\n{self.get_losing_team()}  {self.get_losing_score()}')
+		print(f'{self.get_date()}\n{self.get_winning_team()}  {self.get_winning_score()}\n{self.get_losing_team()}  {self.get_losing_score()}\n')
 
 # For games which end in a tie
 # Ability to show home and away team comes from structure of website HTML code
@@ -64,7 +64,7 @@ class TieGameResult():
 
 	# Display the tie game result
 	def display_game_result(self):
-		print(f'{self.get_date()}\n{self.get_away_team()}  {self.get_score()}\n{self.get_home_team()}  {self.get_score()}')
+		print(f'{self.get_date()}\n{self.get_away_team()}  {self.get_score()}\n{self.get_home_team()}  {self.get_score()}\n')
 
 # Param: Int for week of season
 # Returns the page for the requested week of season
@@ -110,11 +110,12 @@ def __GrabGameResults(soup):
 
 # Return all game results for a given week
 def GameResultsForWeek(week):
-	page = GetPage(week) # Week 1 games
+	page = GetPage(week) # Grab page for given week
 	soup = BeautifulSoup(page.content, 'html.parser')
-	return __GrabGameResults(soup)
+	return __GrabGameResults(soup) # Call helper method and return games list
 
 # Main Method
 if __name__ == '__main__':
-	week_one_games = GameResultsForWeek(2)
-	week_one_games[0].display_game_result()
+	week_one_games = GameResultsForWeek(3)
+	for game in week_one_games:
+		game.display_game_result()
