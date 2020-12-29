@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QPushButton,
     QWidget,
+    QFrame,
 )
 
 results = game_results_class.GameResultsForWeek(1)
@@ -19,17 +20,28 @@ class Window(QWidget):
 
         # Create a grid for each game result
         # Probably a better way to do this, but not sure how
-        x = 0
-        while x < len(results):
-        	f = QGridLayout()
-        	f.addWidget(QPushButton("Game %s" % x), 0, 0)
-        	outer_layout.addLayout(f, x, 0)
-        	x += 1
+        game_counter = 0
+        while game_counter < len(results):
+        	# left_game_frame = QFrame()
+        	# left_game_frame.setStyleSheet('border:1px solid rgb(0, 255, 0)')
+        	left_game = QGridLayout()
+        	left_game.setContentsMargins(20, 20, 20, 20)
+        	left_game.addWidget(QPushButton('Date'), 0, 0)
+        	left_game.addWidget(QPushButton('Winning Team'), 1, 0)
+        	left_game.addWidget(QPushButton('Winning Score'), 1, 1)
+        	left_game.addWidget(QPushButton('Losing Team'), 2, 0)
+        	left_game.addWidget(QPushButton('Losing Score'), 2, 1)
+        	outer_layout.addLayout(left_game, game_counter, 0)
+        	game_counter += 1
 
-        	g = QGridLayout()
-        	g.addWidget(QPushButton("Game %s" % x), 0, 0)
-        	outer_layout.addLayout(g, x - 1, 1)
-        	x += 1
+        	right_game = QGridLayout()
+        	right_game.addWidget(QPushButton('Date'), 0, 0)
+        	right_game.addWidget(QPushButton('Winning Team'), 1, 0)
+        	right_game.addWidget(QPushButton('Winning Score'), 1, 1)
+        	right_game.addWidget(QPushButton('Losing Team'), 2, 0)
+        	right_game.addWidget(QPushButton('Losing Score'), 2, 1)
+        	outer_layout.addLayout(right_game, game_counter - 1, 1)
+        	game_counter += 1
 
         # Set the layout on the application's window
         self.setLayout(outer_layout)
