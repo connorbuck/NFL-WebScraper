@@ -1,31 +1,41 @@
-import game_results
+import game_results_class
 import sys
 
+from PyQt5.QtWidgets import (
+    QApplication,
+    QGridLayout,
+    QPushButton,
+    QWidget,
+)
 
-# 1. Import `QApplication` and all the required widgets
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QWidget
+results = game_results_class.GameResultsForWeek(1)
 
-# 2. Create an instance of QApplication
-app = QApplication(sys.argv)
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("QGridLayout Example")
+        # Create a QGridLayout instance
+        outer_layout = QGridLayout()
 
+        # Create a grid for each game result
+        # Probably a better way to do this, but not sure how
+        x = 0
+        while x < len(results):
+        	f = QGridLayout()
+        	f.addWidget(QPushButton("Game %s" % x), 0, 0)
+        	outer_layout.addLayout(f, x, 0)
+        	x += 1
 
-results = game_results.GetGameResults(1)
-# print(results)
+        	g = QGridLayout()
+        	g.addWidget(QPushButton("Game %s" % x), 0, 0)
+        	outer_layout.addLayout(g, x - 1, 1)
+        	x += 1
 
+        # Set the layout on the application's window
+        self.setLayout(outer_layout)
 
-# 3. Create an instance of your application's GUI
-window = QWidget()
-window.setWindowTitle('PyQt5 App')
-window.setGeometry(100, 100, 280, 80)
-window.move(60, 15)
-# helloMsg = QLabel('<h1>Hello World!</h1>', parent=window)
-helloMsg = QLabel('<h1>' + results['Game 1']['Winner'] + '</h1>', parent=window)
-helloMsg.move(60, 15)
-
-# 4. Show your application's GUI
-window.show()
-
-# 5. Run your application's event loop (or main loop)
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
