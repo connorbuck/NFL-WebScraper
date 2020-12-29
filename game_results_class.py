@@ -95,7 +95,7 @@ def __GrabGameResults(soup):
 			# Add the specific game object to a list with all other games
 			games_list.append(GameResult(game_winner_tname, game_loser_tname, game_date, game_winner_score, game_loser_score))
 
-			# Game ended in a tie (no winner or loser)
+		# Game ended in a tie (no winner or loser)
 		else:
 			teams = game.find_all('tr', class_ = 'draw') # Grabs unformatted team info
 
