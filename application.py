@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton, QScrollArea,QApplication,
-                             QHBoxLayout, QVBoxLayout, QMainWindow, QGroupBox, QGridLayout)
+                             QHBoxLayout, QVBoxLayout, QMainWindow, QGroupBox, QGridLayout, QComboBox)
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtGui import QIcon, QFont, QColor
@@ -13,16 +13,25 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.initUI(results)
 
-    def initUI(self):
+    def initUI(self, results):
         self.scroll = QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()                 # Widget that contains the collection of Grid layout
         self.grid = QGridLayout()              # The Grid that contains the Grids of game results
+        self.mainLayout = QVBoxLayout()
+        self.topLayout = QHBoxLayout()
+        self.weekSelector = QComboBox()
+        self.weekSelector.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"])
+        self.weekSelector.setCurrentText(str(results[1]))
+        # self.weekSelector.activated[str].connect(self.selectWeek)
+        # self.weekSelector.currentTextChanged.connect(self.selectWeek)
+        # results = self.selectWeek()
 
         row = 0
-        for game_no in range(0, len(results) - 1):
-            print(game_no)
+        game_no = 0
+        # for game_no in range(0, len(results) - 1):
+        while game_no < (len(results[0]) - 1):
 
             # LEFT SCOREBUG STUFF
             self.LSBgroupbox = QGroupBox()
@@ -32,42 +41,47 @@ class MainWindow(QMainWindow):
             self.LSBGrid.addWidget(self.LSBgroupbox, 0, 0, 3, 3)
             self.LSBGrid.setSpacing(0)
             
-            LSBdateLabel = QLabel(results[game_no].get_date())
-            LSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-            LSBdateLabel.setFont(QFont('Arial', 14)) 
+            self.LSBdateLabel = QLabel(results[0][game_no].get_date())
+            # LSBdateLabel = QLabel('Date')
+            self.LSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBdateLabel.setFont(QFont('Arial', 14)) 
             
-            LSBteam1Label = QLabel(results[game_no].get_losing_team())
-            LSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-            LSBteam1Label.setFont(QFont('Arial', 14)) 
+            self.LSBteam1Label = QLabel(results[0][game_no].get_losing_team())
+            # LSBteam1Label = QLabel('Losing Team')
+            self.LSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBteam1Label.setFont(QFont('Arial', 14)) 
             
-            LSBteam2Label = QLabel(results[game_no].get_winning_team())
-            LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-            LSBteam2Label.setFont(QFont('Arial', 14)) 
+            self.LSBteam2Label = QLabel(results[0][game_no].get_winning_team())
+            # LSBteam2Label = QLabel('Winning Team')
+            self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBteam2Label.setFont(QFont('Arial', 14)) 
             
-            LSBteam1ScoreLabel = QLabel(results[game_no].get_losing_score())
-            LSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-            LSBteam1ScoreLabel.setFont(QFont('Arial', 14))
-            LSBteam1ScoreLabel.setAlignment(Qt.AlignRight) 
+            self.LSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
+            # LSBteam1ScoreLabel = QLabel('12')
+            self.LSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBteam1ScoreLabel.setFont(QFont('Arial', 14))
+            self.LSBteam1ScoreLabel.setAlignment(Qt.AlignRight) 
             
-            LSBteam2ScoreLabel = QLabel(results[game_no].get_winning_score())
-            LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-            LSBteam2ScoreLabel.setFont(QFont('Arial', 14))
-            LSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
+            self.LSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
+            # LSBteam2ScoreLabel = QLabel('28')
+            self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBteam2ScoreLabel.setFont(QFont('Arial', 14))
+            self.LSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
 
-            self.LSBGrid.addWidget(LSBdateLabel, 0, 0, 1, 3)
-            self.LSBGrid.addWidget(LSBteam1Label, 1, 0, 1, 2)
-            self.LSBGrid.addWidget(LSBteam1ScoreLabel, 1, 2, 1, 1)
-            self.LSBGrid.addWidget(LSBteam2Label, 2, 0, 1, 2)
-            self.LSBGrid.addWidget(LSBteam2ScoreLabel, 2, 2, 1, 1)
+            self.LSBGrid.addWidget(self.LSBdateLabel, 0, 0, 1, 3)
+            self.LSBGrid.addWidget(self.LSBteam1Label, 1, 0, 1, 2)
+            self.LSBGrid.addWidget(self.LSBteam1ScoreLabel, 1, 2, 1, 1)
+            self.LSBGrid.addWidget(self.LSBteam2Label, 2, 0, 1, 2)
+            self.LSBGrid.addWidget(self.LSBteam2ScoreLabel, 2, 2, 1, 1)
 
             # ADD LEFT SCOREBUG TO MAIN GRID LAYOUT
             self.grid.addLayout(self.LSBGrid, row, 0)
 
-            # Increase game number to get number
+            # Increase game number to get correct game number
             game_no += 1
 
-            # Add game ro right if there are games left
-            if game_no <= len(results):
+            # Add game to right if there are games left
+            if game_no <= len(results[0]):
             # RIGHT SCOREBUG STUFF
                 self.RSBgroupbox = QGroupBox()
                 self.RSBgroupbox.setStyleSheet("QGroupBox { border: 6px solid black;}")
@@ -76,41 +90,53 @@ class MainWindow(QMainWindow):
                 self.RSBGrid.addWidget(self.RSBgroupbox, 0, 0, 3, 3)
                 self.RSBGrid.setSpacing(0)
                 
-                RSBdateLabel = QLabel(results[game_no].get_date())
-                RSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-                RSBdateLabel.setFont(QFont('Arial', 14)) 
+                self.RSBdateLabel = QLabel(results[0][game_no].get_date())
+                # RSBdateLabel = QLabel('Date')
+                self.RSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBdateLabel.setFont(QFont('Arial', 14)) 
                 
-                RSBteam1Label = QLabel(results[game_no].get_losing_team())
-                RSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-                RSBteam1Label.setFont(QFont('Arial', 14)) 
+                self.RSBteam1Label = QLabel(results[0][game_no].get_losing_team())
+                # RSBteam1Label = QLabel('Losing Team')
+                self.RSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBteam1Label.setFont(QFont('Arial', 14)) 
                 
-                RSBteam2Label = QLabel(results[game_no].get_winning_team())
-                RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-                RSBteam2Label.setFont(QFont('Arial', 14))
+                self.RSBteam2Label = QLabel(results[0][game_no].get_winning_team())
+                # RSBteam2Label = QLabel('Winning Team')
+                self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBteam2Label.setFont(QFont('Arial', 14))
 
-                RSBteam1ScoreLabel = QLabel(results[game_no].get_losing_score())
-                RSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-                RSBteam1ScoreLabel.setFont(QFont('Arial', 14))
-                RSBteam1ScoreLabel.setAlignment(Qt.AlignRight)
+                self.RSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
+                # RSBteam1ScoreLabel = QLabel('12')
+                self.RSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBteam1ScoreLabel.setFont(QFont('Arial', 14))
+                self.RSBteam1ScoreLabel.setAlignment(Qt.AlignRight)
 
-                RSBteam2ScoreLabel = QLabel(results[game_no].get_winning_score())
-                RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
-                RSBteam2ScoreLabel.setFont(QFont('Arial', 14))
-                RSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
+                self.RSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
+                # RSBteam2ScoreLabel = QLabel('28')
+                self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBteam2ScoreLabel.setFont(QFont('Arial', 14))
+                self.RSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
 
-                self.RSBGrid.addWidget(RSBdateLabel, 0, 0, 1, 3)
-                self.RSBGrid.addWidget(RSBteam1Label, 1, 0, 1, 2)
-                self.RSBGrid.addWidget(RSBteam1ScoreLabel, 1, 2, 1, 1)
-                self.RSBGrid.addWidget(RSBteam2Label, 2, 0, 1, 2)
-                self.RSBGrid.addWidget(RSBteam2ScoreLabel, 2, 2, 1, 1)
+                self.RSBGrid.addWidget(self.RSBdateLabel, 0, 0, 1, 3)
+                self.RSBGrid.addWidget(self.RSBteam1Label, 1, 0, 1, 2)
+                self.RSBGrid.addWidget(self.RSBteam1ScoreLabel, 1, 2, 1, 1)
+                self.RSBGrid.addWidget(self.RSBteam2Label, 2, 0, 1, 2)
+                self.RSBGrid.addWidget(self.RSBteam2ScoreLabel, 2, 2, 1, 1)
 
                 # ADD RIGHT SCOREBUG TO GRID
                 self.grid.addLayout(self.RSBGrid, row, 1)
 
-
             row += 1
+            game_no += 1
 
-        self.widget.setLayout(self.grid)
+
+        self.weekSelector.currentTextChanged.connect(self.selectWeek)
+
+        self.topLayout.addWidget(QLabel('Week'))
+        self.topLayout.addWidget(self.weekSelector)
+        self.mainLayout.addLayout(self.topLayout)
+        self.mainLayout.addLayout(self.grid)
+        self.widget.setLayout(self.mainLayout)
 
         #Scroll Area Properties
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -120,11 +146,36 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.scroll)
 
-        self.setGeometry(600, 100, 1400, 900)
+        self.setGeometry(600, 100, 1800, 1400)
         self.setWindowTitle('NFL Game Results 2020 Season')
         self.show()
 
         return
+
+    def selectWeek(self):
+        week = self.weekSelector.currentText()
+        self.weekSelector.setCurrentText(week)
+        results = game_results_class.GameResultsForWeek(week)
+        self.initUI(results)
+
+        # row = 0
+        # for game_no in range(0, len(results) - 1):
+        #     # print('game_no: ', game_no)
+        #     print('Here: ', self.LSBdateLabel.text())
+        #     self.LSBdateLabel.setText(results[game_no].get_date())
+        #     self.LSBteam1Label.setText(results[game_no].get_losing_team())
+        #     self.LSBteam2Label.setText(results[game_no].get_winning_team())
+        #     self.LSBteam1ScoreLabel.setText(results[game_no].get_losing_score())
+        #     self.LSBteam2ScoreLabel.setText(results[game_no].get_winning_score())
+        #     game_no += 1
+
+        #     if game_no <= len(results):
+        #         self.RSBdateLabel.setText(results[game_no].get_date())
+        #         self.RSBteam1Label.setText(results[game_no].get_losing_team())
+        #         self.RSBteam2Label.setText(results[game_no].get_winning_team())
+        #         self.RSBteam1ScoreLabel.setText(results[game_no].get_losing_score())
+        #         self.RSBteam2ScoreLabel.setText(results[game_no].get_winning_score())
+        #     row += 1
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
