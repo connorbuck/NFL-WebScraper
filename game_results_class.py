@@ -31,6 +31,10 @@ class GameResult():
 	def get_losing_score(self):
 		return self.losing_score
 
+	# Return the result type (winner/loser)
+	def get_result_type(self):
+		return 'win/loss'
+
 	# Display the game result
 	def display_game_result(self):
 		print(f'{self.get_date()}\n{self.get_winning_team()}  {self.get_winning_score()}\n{self.get_losing_team()}  {self.get_losing_score()}\n')
@@ -61,6 +65,10 @@ class TieGameResult():
 	# Return the tie score of the game
 	def get_score(self):
 		return self.tie_score
+
+	# Return the result type (winner/loser)
+	def get_result_type(self):
+		return 'tie'
 
 	# Display the tie game result
 	def display_game_result(self):
@@ -117,5 +125,6 @@ def GameResultsForWeek(week):
 # Main Method
 if __name__ == '__main__':
 	week_one_games = GameResultsForWeek(3)
-	for game in week_one_games:
+	for game in week_one_games[0]:
 		game.display_game_result()
+		print(game.get_result_type())
