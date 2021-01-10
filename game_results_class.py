@@ -108,7 +108,7 @@ def __GrabGameResults(soup):
 			games_list.append(TieGameResult(away_tname, home_tname, game_date, tie_score))
 	return games_list
 
-# Return all game results for a given week
+# Return all game results for a given week and the week number
 def GameResultsForWeek(week):
 	page = GetPage(week) # Grab page for given week
 	soup = BeautifulSoup(page.content, 'html.parser')
