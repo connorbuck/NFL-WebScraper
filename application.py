@@ -45,6 +45,8 @@ class MainWindow(QMainWindow):
                 self.LSBteam2Label = QLabel(results[0][game_no].get_winning_team())
                 self.LSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
                 self.LSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
+                self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')    # Styling here to help distinguish tie games from win/loss games
+                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
 
             # Game ended in a tie
             else:
@@ -53,6 +55,8 @@ class MainWindow(QMainWindow):
                 self.LSBteam2Label = QLabel(results[0][game_no].get_home_team())
                 self.LSBteam1ScoreLabel = QLabel(results[0][game_no].get_score())
                 self.LSBteam2ScoreLabel = QLabel(results[0][game_no].get_score())
+                self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')   # Styling here to help distinguish tie games from win/loss games
+                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
                 
 
             self.LSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
@@ -61,14 +65,12 @@ class MainWindow(QMainWindow):
             self.LSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
             self.LSBteam1Label.setFont(QFont('Arial', 14)) 
             
-            self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')
             self.LSBteam2Label.setFont(QFont('Arial', 14)) 
             
             self.LSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
             self.LSBteam1ScoreLabel.setFont(QFont('Arial', 14))
             self.LSBteam1ScoreLabel.setAlignment(Qt.AlignRight) 
             
-            self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')
             self.LSBteam2ScoreLabel.setFont(QFont('Arial', 14))
             self.LSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
 
@@ -101,6 +103,8 @@ class MainWindow(QMainWindow):
                     self.RSBteam2Label = QLabel(results[0][game_no].get_winning_team())
                     self.RSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
                     self.RSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
+                    self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')    # Styling here to help distinguish tie games from win/loss games
+                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
 
                 # Game ended in a tie
                 else:
@@ -109,6 +113,8 @@ class MainWindow(QMainWindow):
                     self.RSBteam2Label = QLabel(results[0][game_no].get_home_team())
                     self.RSBteam1ScoreLabel = QLabel(results[0][game_no].get_score())
                     self.RSBteam2ScoreLabel = QLabel(results[0][game_no].get_score())
+                    self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')   # Styling here to help distinguish tie games from win/loss games
+                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
                 
                 self.RSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
                 self.RSBdateLabel.setFont(QFont('Arial', 14)) 
@@ -116,14 +122,12 @@ class MainWindow(QMainWindow):
                 self.RSBteam1Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
                 self.RSBteam1Label.setFont(QFont('Arial', 14)) 
                 
-                self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')
                 self.RSBteam2Label.setFont(QFont('Arial', 14))
 
                 self.RSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
                 self.RSBteam1ScoreLabel.setFont(QFont('Arial', 14))
                 self.RSBteam1ScoreLabel.setAlignment(Qt.AlignRight)
 
-                self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')
                 self.RSBteam2ScoreLabel.setFont(QFont('Arial', 14))
                 self.RSBteam2ScoreLabel.setAlignment(Qt.AlignRight) 
 
