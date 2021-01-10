@@ -112,7 +112,7 @@ def __GrabGameResults(soup):
 def GameResultsForWeek(week):
 	page = GetPage(week) # Grab page for given week
 	soup = BeautifulSoup(page.content, 'html.parser')
-	return __GrabGameResults(soup) # Call helper method and return games list
+	return (__GrabGameResults(soup), week) # Call helper method and return games list
 
 # Main Method
 if __name__ == '__main__':
