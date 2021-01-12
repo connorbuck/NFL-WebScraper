@@ -5,7 +5,7 @@
 * These game results are displayed in a simple GUI application with small design features used to display these results in a clean, easy-to-read format.
 
 ## Purpose
-* I created this project to learn basics of web scraping and python application development.
+* I created this project to learn the basics of web scraping and python application development.
 * I am a huge fan of the NFL and felt that this project combined my interests of programming and football.
 
 ## Notes
