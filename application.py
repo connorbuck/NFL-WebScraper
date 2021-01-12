@@ -19,19 +19,20 @@ class MainWindow(QMainWindow):
         self.scroll = QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()                 # Widget that contains the collection of Grid layout
         self.grid = QGridLayout()              # The Grid that contains the Grids of game results
-        self.mainLayout = QVBoxLayout()
-        self.yearLayout = QHBoxLayout()
-        self.weekLayout = QHBoxLayout()
+        self.mainLayout = QVBoxLayout()        # Main layout which contains all other layouts
+        self.topLayout = QHBoxLayout()         # Top layout which contains widgets for selecting the year and week
 
+        # Create week combobox and add weeks 1-17 as options
         self.weekSelector = QComboBox()
         for week_num in range(1, 18):
             self.weekSelector.addItem(str(week_num))
         self.weekSelector.setCurrentText(str(results[2]))       # Update the value of the combobox because initUI is called when a week is selected and will always set week to 1 if this line is missing
 
+        # Create year combobox and add years 1970-2020 as options
         self.yearSelector = QComboBox()
-        for year_num in range(2000, 2021):
+        for year_num in range(1970, 2021):
             self.yearSelector.addItem(str(year_num))
-        self.yearSelector.setCurrentText(str(results[1]))
+        self.yearSelector.setCurrentText(str(results[1]))       # Update the value of the combobox because initUI is called when a year is selected and will always set year to 2020 if this line is missing
 
 
         row = 0
@@ -40,7 +41,7 @@ class MainWindow(QMainWindow):
 
             # LEFT SCOREBUG STUFF
             self.LSBgroupbox = QGroupBox()
-            self.LSBgroupbox.setStyleSheet("QGroupBox { border: 6px solid black;}")
+            self.LSBgroupbox.setStyleSheet("QGroupBox { border: 6px solid gray;}")
 
             self.LSBGrid = QGridLayout()
             self.LSBGrid.addWidget(self.LSBgroupbox, 0, 0, 3, 3)
@@ -54,7 +55,7 @@ class MainWindow(QMainWindow):
                 self.LSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
                 self.LSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
                 self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')    # Styling here to help distinguish tie games from win/loss games
-                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
+                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
 
             # Game ended in a tie
             else:
@@ -64,7 +65,7 @@ class MainWindow(QMainWindow):
                 self.LSBteam1ScoreLabel = QLabel(results[0][game_no].get_score())
                 self.LSBteam2ScoreLabel = QLabel(results[0][game_no].get_score())
                 self.LSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')   # Styling here to help distinguish tie games from win/loss games
-                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
+                self.LSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
                 
 
             self.LSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
@@ -75,7 +76,7 @@ class MainWindow(QMainWindow):
             
             self.LSBteam2Label.setFont(QFont('Arial', 14)) 
             
-            self.LSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+            self.LSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px')
             self.LSBteam1ScoreLabel.setFont(QFont('Arial', 14))
             self.LSBteam1ScoreLabel.setAlignment(Qt.AlignRight) 
             
@@ -98,7 +99,7 @@ class MainWindow(QMainWindow):
             if game_no <= len(results[0]):
             # RIGHT SCOREBUG STUFF
                 self.RSBgroupbox = QGroupBox()
-                self.RSBgroupbox.setStyleSheet("QGroupBox { border: 6px solid black;}")
+                self.RSBgroupbox.setStyleSheet("QGroupBox { border: 6px solid gray;}")
 
                 self.RSBGrid = QGridLayout()
                 self.RSBGrid.addWidget(self.RSBgroupbox, 0, 0, 3, 3)
@@ -112,7 +113,7 @@ class MainWindow(QMainWindow):
                     self.RSBteam1ScoreLabel = QLabel(results[0][game_no].get_losing_score())
                     self.RSBteam2ScoreLabel = QLabel(results[0][game_no].get_winning_score())
                     self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')    # Styling here to help distinguish tie games from win/loss games
-                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
+                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px; font-weight: bold')   # Styling here to help distinguish tie games from win/loss games
 
                 # Game ended in a tie
                 else:
@@ -122,7 +123,7 @@ class MainWindow(QMainWindow):
                     self.RSBteam1ScoreLabel = QLabel(results[0][game_no].get_score())
                     self.RSBteam2ScoreLabel = QLabel(results[0][game_no].get_score())
                     self.RSBteam2Label.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')   # Styling here to help distinguish tie games from win/loss games
-                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
+                    self.RSBteam2ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px')  # Styling here to help distinguish tie games from win/loss games
                 
                 self.RSBdateLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
                 self.RSBdateLabel.setFont(QFont('Arial', 14)) 
@@ -132,7 +133,7 @@ class MainWindow(QMainWindow):
                 
                 self.RSBteam2Label.setFont(QFont('Arial', 14))
 
-                self.RSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 0px; padding-bottom: 0px')
+                self.RSBteam1ScoreLabel.setStyleSheet('padding-top : 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px')
                 self.RSBteam1ScoreLabel.setFont(QFont('Arial', 14))
                 self.RSBteam1ScoreLabel.setAlignment(Qt.AlignRight)
 
@@ -155,14 +156,21 @@ class MainWindow(QMainWindow):
         self.yearSelector.currentTextChanged.connect(self.updateYearAndWeek)
         self.weekSelector.currentTextChanged.connect(self.updateYearAndWeek)
 
-        self.yearLayout.addWidget(QLabel('Year'))
-        self.yearLayout.addWidget(self.yearSelector)
+        self.yearLabel = QLabel('Year')
+        self.yearLabel.setFixedWidth(50)
+        self.yearLabel.setFont(QFont('Arial', 14))
 
-        self.weekLayout.addWidget(QLabel('Week'))
-        self.weekLayout.addWidget(self.weekSelector)
 
-        self.mainLayout.addLayout(self.yearLayout)
-        self.mainLayout.addLayout(self.weekLayout)
+        self.weekLabel = QLabel('Week')
+        self.weekLabel.setFixedWidth(50)
+        self.weekLabel.setFont(QFont('Arial', 14))
+
+        self.topLayout.addWidget(self.yearLabel)
+        self.topLayout.addWidget(self.yearSelector)
+        self.topLayout.addWidget(self.weekLabel)
+        self.topLayout.addWidget(self.weekSelector)
+
+        self.mainLayout.addLayout(self.topLayout)
         self.mainLayout.addLayout(self.grid)
         self.widget.setLayout(self.mainLayout)
 
@@ -174,7 +182,7 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.scroll)
 
-        self.setGeometry(600, 100, 1800, 1400)
+        self.setGeometry(50, 50, 1600, 900)
         self.setWindowTitle('NFL Game Results %s Season' % str(results[1]))
         self.show()
 
