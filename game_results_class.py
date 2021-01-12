@@ -124,6 +124,7 @@ def GameResultsForWeek(year, week):
 
 # Main Method
 if __name__ == '__main__':
+	# Used only for testing purposes
 	week_one_games = GameResultsForWeek(2020, 3)
 	for game in week_one_games[0]:
 		game.display_game_result()
