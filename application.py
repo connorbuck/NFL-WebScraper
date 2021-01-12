@@ -7,7 +7,7 @@ import sys
 import game_results_class
 
 # TODO: Use this format to fill in results in window
-results = game_results_class.GameResultsForWeek(1)      # results[0] contains list of game objects, results[1] contains the corresponding week number for these games
+results = game_results_class.GameResultsForWeek(2020, 1)      # results[0] contains list of game objects, results[1] contains the corresponding year number for the games, results[2] contains the corresponding week number for these games
 
 class MainWindow(QMainWindow):
 
@@ -20,10 +20,18 @@ class MainWindow(QMainWindow):
         self.widget = QWidget()                 # Widget that contains the collection of Grid layout
         self.grid = QGridLayout()              # The Grid that contains the Grids of game results
         self.mainLayout = QVBoxLayout()
-        self.topLayout = QHBoxLayout()
+        self.yearLayout = QHBoxLayout()
+        self.weekLayout = QHBoxLayout()
+
         self.weekSelector = QComboBox()
-        self.weekSelector.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"])
-        self.weekSelector.setCurrentText(str(results[1]))       # Update the value of the combobox because initUI is called when a week is selected and will always set week to 1 if this line is missing
+        for week_num in range(1, 18):
+            self.weekSelector.addItem(str(week_num))
+        self.weekSelector.setCurrentText(str(results[2]))       # Update the value of the combobox because initUI is called when a week is selected and will always set week to 1 if this line is missing
+
+        self.yearSelector = QComboBox()
+        for year_num in range(2000, 2021):
+            self.yearSelector.addItem(str(year_num))
+        self.yearSelector.setCurrentText(str(results[1]))
 
 
         row = 0
@@ -144,11 +152,17 @@ class MainWindow(QMainWindow):
             game_no += 1
 
 
-        self.weekSelector.currentTextChanged.connect(self.selectWeek)
+        self.yearSelector.currentTextChanged.connect(self.updateYearAndWeek)
+        self.weekSelector.currentTextChanged.connect(self.updateYearAndWeek)
 
-        self.topLayout.addWidget(QLabel('Week'))
-        self.topLayout.addWidget(self.weekSelector)
-        self.mainLayout.addLayout(self.topLayout)
+        self.yearLayout.addWidget(QLabel('Year'))
+        self.yearLayout.addWidget(self.yearSelector)
+
+        self.weekLayout.addWidget(QLabel('Week'))
+        self.weekLayout.addWidget(self.weekSelector)
+
+        self.mainLayout.addLayout(self.yearLayout)
+        self.mainLayout.addLayout(self.weekLayout)
         self.mainLayout.addLayout(self.grid)
         self.widget.setLayout(self.mainLayout)
 
@@ -161,15 +175,17 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.scroll)
 
         self.setGeometry(600, 100, 1800, 1400)
-        self.setWindowTitle('NFL Game Results 2020 Season')
+        self.setWindowTitle('NFL Game Results %s Season' % str(results[1]))
         self.show()
 
         return
 
-    def selectWeek(self):
+    def updateYearAndWeek(self):
         week = self.weekSelector.currentText()
         self.weekSelector.setCurrentText(week)
-        results = game_results_class.GameResultsForWeek(week)
+        year = self.yearSelector.currentText()
+        self.yearSelector.setCurrentText(year)
+        results = game_results_class.GameResultsForWeek(year, week)
         self.initUI(results)
 
 if __name__ == '__main__':

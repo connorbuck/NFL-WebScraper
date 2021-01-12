@@ -76,8 +76,8 @@ class TieGameResult():
 
 # Param: Int for week of season
 # Returns the page for the requested week of season
-def GetPage(weekNum):
-    return requests.get("https://www.pro-football-reference.com/years/2020/week_%s.htm" % weekNum)
+def GetPage(yearNum, weekNum):
+    return requests.get("https://www.pro-football-reference.com/years/%s/week_%s.htm" % (yearNum, weekNum))
 
 # Grabs and returns the result of each NFL game for a given week
 # Private method, meant to only be used inside of GameResultsForWeek() method below
@@ -117,14 +117,14 @@ def __GrabGameResults(soup):
 	return games_list
 
 # Return all game results for a given week and the week number
-def GameResultsForWeek(week):
-	page = GetPage(week) # Grab page for given week
+def GameResultsForWeek(year, week):
+	page = GetPage(year, week) # Grab page for given week
 	soup = BeautifulSoup(page.content, 'html.parser')
-	return (__GrabGameResults(soup), week) # Call helper method and return games list
+	return (__GrabGameResults(soup), year, week) # Call helper method and return games list
 
 # Main Method
 if __name__ == '__main__':
-	week_one_games = GameResultsForWeek(3)
+	week_one_games = GameResultsForWeek(2020, 3)
 	for game in week_one_games[0]:
 		game.display_game_result()
 		print(game.get_result_type())
