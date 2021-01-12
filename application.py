@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
 
         row = 0
         game_no = 0
+        # Loop through every game in our results list (Each week/season may have a different number of games due to bye weeks and number of teams in the league)
         while game_no < (len(results[0]) - 1):
 
             # LEFT SCOREBUG STUFF
@@ -153,13 +154,13 @@ class MainWindow(QMainWindow):
             game_no += 1
 
 
-        self.yearSelector.currentTextChanged.connect(self.updateYearAndWeek)
-        self.weekSelector.currentTextChanged.connect(self.updateYearAndWeek)
+        self.yearSelector.currentTextChanged.connect(self.updateYearAndWeek) # Check to see if the user selected a different year, if so we update the game results shown
+        self.weekSelector.currentTextChanged.connect(self.updateYearAndWeek) # Check to see if the user selected a different week, if so we update the game results shown
 
+        # TOP LAYOUT WIDGETS
         self.yearLabel = QLabel('Year')
         self.yearLabel.setFixedWidth(50)
         self.yearLabel.setFont(QFont('Arial', 14))
-
 
         self.weekLabel = QLabel('Week')
         self.weekLabel.setFixedWidth(50)
@@ -183,11 +184,13 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.scroll)
 
         self.setGeometry(50, 50, 1600, 900)
-        self.setWindowTitle('NFL Game Results %s Season' % str(results[1]))
+        self.setWindowTitle('NFL Game Results %s Season' % str(results[1])) # Changes the title of the window depending on which year is selected
         self.show()
 
         return
 
+    # Called when the user selects a new week/year
+    # Grab results for the week and year and call our initializer method to recreate our window with the new game results
     def updateYearAndWeek(self):
         week = self.weekSelector.currentText()
         self.weekSelector.setCurrentText(week)
