@@ -6,7 +6,6 @@ from PyQt5.QtGui import QIcon, QFont, QColor
 import sys
 import game_results_class
 
-# TODO: Use this format to fill in results in window
 results = game_results_class.GameResultsForWeek(2020, 1)      # results[0] contains list of game objects, results[1] contains the corresponding year number for the games, results[2] contains the corresponding week number for these games
 
 class MainWindow(QMainWindow):
